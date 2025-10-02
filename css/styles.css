@@ -1,0 +1,430 @@
+/* Birthday Party Website Styles */
+
+body {
+    background-color: #fcfcfc;
+    transition: background-color linear 5s;
+    overflow-x: hidden;
+    font-family: 'Signika', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Loading Animation */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff6b9d, #ffd93d, #6bcf7f, #4d9de0);
+    background-size: 400% 400%;
+    animation: gradient 3s ease infinite;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading::before {
+    content: "🎉 Loading Party... 🎉";
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    animation: pulse 1s infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Container Styles */
+.container {
+    display: none;
+}
+
+/* Background Color Classes */
+.peach {
+    background-color: #FFDAB9;
+}
+
+.peach-after {
+    animation: peach_alive linear 8s infinite;
+}
+
+@keyframes peach_alive {
+    0% { background-color: #FFDAB9; }
+    25% { background-color: #FFE4B5; }
+    50% { background-color: #FFDAB9; }
+    75% { background-color: #FFEFD5; }
+    100% { background-color: #FFDAB9; }
+}
+
+/* Balloons Styles */
+.balloons {
+    position: fixed;
+    bottom: -200px;
+    opacity: 0.6;
+    z-index: 99;
+    width: 50px;
+    height: 91px;
+    background-repeat: no-repeat;
+    background-size: 50px 91px;
+    transition: all 0.5s ease;
+}
+
+.balloons h3 {
+    text-transform: uppercase;
+    font-family: 'Signika', sans-serif;
+    font-size: 40px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+#b1, #b2, #b3, #b4, #b5, #b6, #b7, #b8, #b9 {
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent),
+                linear-gradient(135deg, #ff6b9d, #ff8a9b);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Balloon Animation */
+.balloons-animate {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Bulb Styles */
+.bulb-holder {
+    height: 70px;
+    padding: 10px;
+}
+
+.bulb {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    background-image: url('../images/bulb-off.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50px 50px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Bulb Glow Effects */
+.bulb-glow-yellow {
+    background-color: #FFD700;
+    box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
+    animation: bulb_glow_yellow 2s infinite;
+}
+
+.bulb-glow-red {
+    background-color: #FF4444;
+    box-shadow: 0 0 20px #FF4444, 0 0 40px #FF4444;
+    animation: bulb_glow_red 2s infinite;
+}
+
+.bulb-glow-blue {
+    background-color: #4444FF;
+    box-shadow: 0 0 20px #4444FF, 0 0 40px #4444FF;
+    animation: bulb_glow_blue 2s infinite;
+}
+
+.bulb-glow-green {
+    background-color: #44FF44;
+    box-shadow: 0 0 20px #44FF44, 0 0 40px #44FF44;
+    animation: bulb_glow_green 2s infinite;
+}
+
+.bulb-glow-pink {
+    background-color: #FF44AA;
+    box-shadow: 0 0 20px #FF44AA, 0 0 40px #FF44AA;
+    animation: bulb_glow_pink 2s infinite;
+}
+
+.bulb-glow-orange {
+    background-color: #FF8844;
+    box-shadow: 0 0 20px #FF8844, 0 0 40px #FF8844;
+    animation: bulb_glow_orange 2s infinite;
+}
+
+@keyframes bulb_glow_yellow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes bulb_glow_red {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes bulb_glow_blue {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes bulb_glow_green {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes bulb_glow_pink {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes bulb_glow_orange {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Welcome Dance Animation */
+.center1 {
+    display: block;
+    max-width: 400px;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+}
+
+/* Ensure both GIFs scale the same way */
+#welcome_dance {
+    max-width: 400px;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Cake Styles */
+.cake_class {
+    position: fixed;
+    left: 45%;
+    top: 60%;
+    opacity: 1.0;
+    z-index: 9999;
+    width: 12%;
+    height: 20%;
+    display: none;
+}
+
+.cake-cover {
+    position: fixed;
+    left: 47%;
+    top: 34%;
+    opacity: 1.0;
+    z-index: 9999;
+    width: 130px;
+    height: 200px;
+    display: none;
+}
+
+/* Animated Cake */
+.cake {
+    position: absolute;
+    left: 50%;
+    margin-left: -150px;
+    width: 300px;
+    height: 300px;
+}
+
+.velas {
+    background: #ffffff;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -50px;
+    width: 15px;
+    height: 50px;
+}
+
+.fuego {
+    display: none;
+    border-radius: 100%;
+    box-shadow: 0 0 40px 10px rgba(248, 233, 209, 0.2);
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    margin-left: -10px;
+    width: 20px;
+    height: 25px;
+    background: radial-gradient(circle, #ffd700, #ff4500);
+    animation: flame 1s infinite alternate;
+}
+
+@keyframes flame {
+    0% {
+        transform: translateY(0) scale(1);
+        background: radial-gradient(circle, #ffd700, #ff4500);
+    }
+    100% {
+        transform: translateY(-5px) scale(1.1);
+        background: radial-gradient(circle, #ff4500, #ffd700);
+    }
+}
+
+.cobertura {
+    background: #ece7e3;
+    border-radius: 150px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    margin-left: -83px;
+    margin-top: -15px;
+    width: 166px;
+    height: 37px;
+    z-index: 10;
+}
+
+.bizcocho {
+    background: #6d3826;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -75px;
+    width: 150px;
+    height: 100px;
+}
+
+/* Banner Styles */
+.banner {
+    max-width: 100%;
+    transform: translateY(-500px);
+    transition: transform 2s ease;
+    display: none;
+}
+
+.banner-show {
+    transform: translateY(0px);
+    display: block;
+}
+
+/* Button Styles */
+.btn-primary {
+    border-color: #466baf;
+    padding: 10px;
+    text-transform: uppercase;
+    font-family: 'Signika', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    background-color: #466baf;
+    margin: 5px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+/* Welcome Button Specific Styling */
+#welcome_btn {
+    background-color: #b0b0fd;
+    border-color: #b0b0fd;
+    font-family: 'Anime Ace BB', monospace;
+    text-transform: none;
+    color: #333;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    border-color: #fff;
+    color: #fff;
+    background-color: #5a7bc4;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Show button */
+#welcome_btn {
+    display: inline-block;
+}
+
+/* Card Styles */
+#card {
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    background: linear-gradient(135deg, #ff6b9d, #4d9de0);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    padding: 20px;
+    display: none;
+}
+
+#card-inside, #card-front {
+    color: white;
+    text-align: center;
+    font-family: 'Lobster', cursive;
+}
+
+.wrap {
+    padding: 20px;
+}
+
+/* Audio Styles */
+.song {
+    display: none;
+}
+
+/* Hidden Elements */
+#lights_btn, #music_btn, #decorate_btn, #balloons_btn, 
+#cake_btn, #party_btn, #message_btn, #banner, 
+#cake_main, #candle, #card {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .balloons h3 {
+        font-size: 25px;
+    }
+    
+    .center1 {
+        width: 200px;
+        height: 200px;
+        margin-left: -100px;
+        margin-top: -100px;
+    }
+    
+    .btn-primary {
+        font-size: 12px;
+        padding: 8px;
+    }
+    
+    .cake {
+        transform: scale(0.7);
+    }
+}
+
+/* Party Mode Effects */
+.party-mode {
+    animation: party_background 2s infinite;
+}
+
+@keyframes party_background {
+    0% { background-color: #ff6b9d; }
+    25% { background-color: #4d9de0; }
+    50% { background-color: #6bcf7f; }
+    75% { background-color: #ffd93d; }
+    100% { background-color: #ff6b9d; }
+}
