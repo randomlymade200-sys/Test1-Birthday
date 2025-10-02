@@ -215,6 +215,12 @@ body {
     object-fit: contain;
 }
 
+/* Scale secondscene.gif 20% larger */
+#welcome_dance[src*="secondscene.gif"] {
+    max-width: 480px;
+    max-height: 480px;
+}
+
 /* Cake Styles */
 .cake_class {
     position: fixed;

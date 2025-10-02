@@ -17,7 +17,7 @@ $(document).ready(function() {
         
         setTimeout(function() {
             $('#lights_btn').fadeIn('slow');
-        }, 3000);
+        }, 1000);
     });
 
     // Lights Button - Turn on colorful bulbs
