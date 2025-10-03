@@ -719,7 +719,103 @@ $(document).ready(function() {
     
     // Temporary buttons functionality
     $('#temp_btn_1').click(function() {
-        alert('Temp Button 1 clicked! This is a placeholder.');
+        // Create a beautiful "good person" message modal
+        const goodPersonMessage = `
+            <div id="good-person-modal" style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Signika', sans-serif;
+            ">
+                <div style="
+                    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #6c5ce7 100%);
+                    padding: 40px;
+                    border-radius: 20px;
+                    text-align: center;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                    max-width: 450px;
+                    animation: slideIn 0.5s ease-out;
+                ">
+                    <h1 style="
+                        color: white;
+                        font-size: 2.5em;
+                        margin-bottom: 20px;
+                        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                        animation: glow 2s infinite alternate;
+                    "> Oki oki  </h1>
+                    
+                    <p style="
+                        color: #f8f9fa;
+                        font-size: 1.3em;
+                        line-height: 1.6;
+                        margin-bottom: 15px;
+                        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+                    ">
+                        good luck with what you have coming,<br>
+                        along the way 
+                    </p>
+                    
+                    <p style="
+                        color: #f8f9fa;
+                        font-size: 1.2em;
+                        line-height: 1.6;
+                        margin-bottom: 15px;
+                        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+                    ">
+                        Keep being amazing,<br>
+                        
+                    </p>
+                    
+                    <p style="
+                        color: #f8f9fa;
+                        font-size: 1.1em;
+                        line-height: 1.6;
+                        margin-bottom: 25px;
+                        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+                    ">
+                        Achha haiii, haa aesi baat hai
+                    </p>
+                    
+                    <button onclick="$('#good-person-modal').fadeOut(); $(this).parent().parent().remove();" style="
+                        background: white;
+                        color: #bed4e5ff;
+                        border: none;
+                        padding: 12px 25px;
+                        border-radius: 25px;
+                        font-size: 1.1em;
+                        font-weight: bold;
+                        cursor: pointer;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'">
+                        Thik hai! 
+                    </button>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes slideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                @keyframes glow {
+                    0% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(255,255,255,0.3); }
+                    100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.6), 0 0 30px rgba(255,255,255,0.4); }
+                }
+            </style>
+        `;
+        
+        // Add the message to the page
+        $('body').append(goodPersonMessage);
+        
+        // Add animation to the button
         $(this).closest('.cake-button-item').addClass('animated bounce');
         setTimeout(() => {
             $(this).closest('.cake-button-item').removeClass('animated bounce');
