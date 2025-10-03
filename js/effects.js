@@ -1,98 +1,273 @@
 // Birthday Party Interactive Effects
 $(document).ready(function() {
+    console.log('🎉 Birthday party script loaded!');
+    console.log('jQuery version:', $.fn.jquery);
     
-    // Hide loading screen and show container
+    // Check if elements exist
+    console.log('Welcome button exists:', $('#welcome_btn').length > 0);
+    console.log('Lights button exists:', $('#lights_btn').length > 0);
+    console.log('Yes button exists:', $('#yes_btn').length > 0);
+    console.log('No button exists:', $('#no_btn').length > 0);
+    
+    // Hide loading screen and show initial page
     $(window).load(function() {
+        console.log('Window loaded, hiding loading screen');
         $('.loading').fadeOut('fast');
-        $('.container').fadeIn('fast');
+        $('#initial_page').fadeIn('fast');
     });
 
-    // Welcome Button - Start the party!
+    // Yes Button - Show second.gif
+    $('#yes_btn').click(function() {
+        console.log('Yes button clicked!');
+        console.log('Welcome button exists:', $('#welcome_btn').length);
+        
+        // Hide initial page
+        $('#initial_page').fadeOut('slow', function() {
+            // Show second page with gif
+            $('#second_page').fadeIn('slow');
+            console.log('Second page shown');
+            
+            // After 3 seconds, show startgif.gif with welcome button
+            setTimeout(function() {
+                console.log('3 seconds passed, hiding second page');
+                $('#second_page').fadeOut('slow', function() {
+                    // Show startgif.gif (welcome dance)
+                    console.log('Showing welcome dance GIF');
+                    $('#welcome_dance').fadeIn('slow');
+                    
+                    // Show container so buttons are visible
+                    $('.container').fadeIn('slow');
+                    
+                    // Show welcome button after gif appears
+                    setTimeout(function() {
+                        console.log('Attempting to show welcome button');
+                        console.log('Welcome button exists:', $('#welcome_btn').length);
+                        console.log('Welcome button parent visible:', $('#welcome_btn').parent().is(':visible'));
+                        console.log('Container visible:', $('.container').is(':visible'));
+                        
+                        // Show welcome button with multiple methods
+                        $('#welcome_btn').show().css({
+                            'display': 'inline-block',
+                            'visibility': 'visible',
+                            'opacity': '1'
+                        });
+                        
+                        setTimeout(function() {
+                            console.log('Welcome button display:', $('#welcome_btn').css('display'));
+                            console.log('Welcome button visibility:', $('#welcome_btn').css('visibility'));
+                            console.log('Welcome button opacity:', $('#welcome_btn').css('opacity'));
+                            console.log('Welcome button visible:', $('#welcome_btn').is(':visible'));
+                        }, 500);
+                    }, 1000);
+                });
+            }, 3000); // Show second.gif for 3 seconds
+        });
+    });
+
+    // No Button - Show Happy Birthday page
+    $('#no_btn').click(function() {
+        console.log('No button clicked! Showing Happy Birthday page');
+        
+        // Hide initial page
+        $('#initial_page').fadeOut('slow', function() {
+            // Show Happy Birthday page
+            $('#happy_birthday_page').fadeIn('slow');
+        });
+    });
+
+    // Welcome Button - Move to lights
     $('#welcome_btn').click(function() {
+        console.log('Welcome button clicked!');
         $(this).fadeOut('slow');
         
-        // Change the GIF to secondscene.gif
-        $('#welcome_dance').attr('src', 'images/secondscene.gif');
-        $('#welcome_dance').fadeIn('slow');
-        
+        // Show lights button
         setTimeout(function() {
             $('#lights_btn').fadeIn('slow');
-        }, 1000);
+        }, 500);
     });
 
-    // Lights Button - Turn on colorful bulbs
+    // Lights Button - Show confirmation button
     $('#lights_btn').click(function() {
+        console.log('Lights button clicked!');
         $(this).fadeOut('slow');
         
-        // Change background to black
-        $('body').css('background-color', '#000000');
+        // Show "Are you sure?" button
+        setTimeout(function() {
+            $('#confirm_lights_btn').fadeIn('slow');
+        }, 500);
+    });
+
+    // Confirm Lights Button - Turn on colorful bulbs and play music
+    $('#confirm_lights_btn').click(function() {
+        console.log('Confirm lights button clicked!');
+        $(this).fadeOut('slow');
+        
+        // Show turnoff light GIF
+        $('#turnoff_light').fadeIn('slow');
+        
+        // Change background to black permanently after a delay
+        setTimeout(function() {
+            $('body').css('background-color', '#000000').addClass('dark-theme');
+            
+            // Hide the turnoff light GIF after background changes
+            $('#turnoff_light').fadeOut('slow');
+            
+            // Turn on the colorful bulbs
+            setTimeout(function() {
+                $('.bulb').addClass('glow');
+                $('.container').fadeIn('slow');
+            }, 500);
+        }, 2000); // Show GIF for 2 seconds
         
         // Remove welcome dance GIF
         $('#welcome_dance').fadeOut('slow');
         
-        setTimeout(function() {
-            $('#music_btn').fadeIn('slow');
-        }, 3000);
-    });
-
-    // Music Button - Play birthday song
-    $('#music_btn').click(function() {
-        $(this).fadeOut('slow');
+        console.log('Starting music automatically after lights...');
         
-        // Play audio (if available)
+        // Play music automatically
         var audio = $('.song')[0];
+        console.log('Audio element found:', !!audio);
+        
         if (audio) {
-            audio.play().catch(function(error) {
-                console.log('Audio play failed:', error);
+            console.log('Attempting to play audio file...');
+            console.log('Audio src:', audio.src || 'No src');
+            console.log('Audio canPlay:', audio.canPlayType('audio/mpeg'), audio.canPlayType('audio/mp4'));
+            
+            audio.volume = 0.7; // Set volume to 70%
+            
+            // Add event listener for when music ends
+            audio.addEventListener('ended', function() {
+                console.log('Music ended, removing everything and showing cake.gif');
+                
+                // Remove/hide all decorative elements
+                $('.bulb').removeClass('glow').fadeOut('slow');
+                $('#banner').fadeOut('slow');
+                
+                // Show cake.gif after clearing
+                setTimeout(function() {
+                    $('#cake_gif').fadeIn('slow');
+                    
+                    // After 5 seconds, show cake buttons directly
+                    setTimeout(function() {
+                        $('#cake_gif').fadeOut('slow', function() {
+                            $('.container').show();
+                            
+                            // Show cake buttons after cake animation
+                            setTimeout(function() {
+                                $('.cake-buttons-container').addClass('show').hide().fadeIn('slow');
+                            }, 500);
+                        });
+                    }, 5000); // Show cake.gif for 5 seconds
+                }, 1000); // Short delay after music ends
             });
+            
+            audio.play().then(function() {
+                console.log('Audio file playing successfully');
+            }).catch(function(error) {
+                console.log('Audio file failed, trying generated melody:', error);
+                playBirthdayMelody();
+            });
+        } else {
+            console.log('No audio element found, playing generated melody');
+            playBirthdayMelody();
         }
         
         // Enhanced bulb effects
         $('.bulb').addClass('animate__animated animate__pulse animate__infinite');
         $('body').addClass('peach-after');
+    });
+
+    // Test Audio Button - Simple beep test
+    $('#test_audio_btn').click(function() {
+        console.log('🔊 Test audio button clicked!');
         
-        setTimeout(function() {
-            $('#decorate_btn').fadeIn('slow');
+        // Show immediate feedback
+        $(this).text('🔊 Testing...').prop('disabled', true);
+        
+        // Try a simple beep first
+        try {
+            console.log('Creating audio context for test...');
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            console.log('Audio context state:', audioContext.state);
+            
+            if (audioContext.state === 'suspended') {
+                console.log('Audio context suspended, resuming...');
+                audioContext.resume().then(() => {
+                    console.log('Audio context resumed');
+                    playTestBeep(audioContext);
+                }).catch(error => {
+                    console.log('Failed to resume audio context:', error);
+                    alert('❌ Audio test failed: Could not resume audio context');
+                });
+            } else {
+                playTestBeep(audioContext);
+            }
+            
+        } catch (error) {
+            console.log('❌ Test audio failed:', error);
+            alert('❌ Audio test failed: ' + error.message);
+        }
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+            $(this).text('🔊 Test Audio').prop('disabled', false);
         }, 3000);
     });
 
-    // Decorate Button - Show banner
-    $('#decorate_btn').click(function() {
-        $(this).fadeOut('slow');
-        
-        $('#banner').addClass('banner-show');
-        $('#banner').fadeIn('slow');
-        
-        setTimeout(function() {
-            $('#balloons_btn').fadeIn('slow');
-        }, 3000);
-    });
-
-    // Balloons Button - Animate balloons
-    $('#balloons_btn').click(function() {
-        $(this).fadeOut('slow');
-        
-        animateBalloons();
-        
-        setTimeout(function() {
-            $('#cake_btn').fadeIn('slow');
-        }, 3000);
-    });
-
-    // Cake Button - Show birthday cake
-    $('#cake_btn').click(function() {
-        $(this).fadeOut('slow');
-        
-        $('#cake_main').fadeIn('slow');
-        $('#candle').fadeIn('slow');
-        
-        // Show candle flames
-        $('.fuego').fadeIn('slow');
-        
-        setTimeout(function() {
-            $('#party_btn').fadeIn('slow');
-        }, 3000);
-    });
+    function playTestBeep(audioContext) {
+        try {
+            console.log('🔔 Creating test beep oscillator...');
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4 note
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+            
+            console.log('✅ Test beep created and started');
+            
+            // Show success message
+            setTimeout(() => {
+                const testResult = $(`
+                    <div style="
+                        position: fixed; 
+                        top: 20px; 
+                        right: 20px; 
+                        background: #4CAF50; 
+                        color: white; 
+                        padding: 15px; 
+                        border-radius: 8px; 
+                        z-index: 10000;
+                        font-weight: bold;
+                    ">
+                        ✅ Audio Test: BEEP SENT!<br>
+                        <small>Did you hear a sound?</small>
+                    </div>
+                `);
+                $('body').append(testResult);
+                
+                setTimeout(() => {
+                    testResult.fadeOut(1000, function() {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }, 100);
+            
+        } catch (error) {
+            console.log('❌ Error in playTestBeep:', error);
+            alert('❌ Test beep failed: ' + error.message);
+        }
+    }
 
     // Party Button - Ultimate party mode!
     $('#party_btn').click(function() {
@@ -233,9 +408,345 @@ function createFireworks() {
     });
 }
 
+// Function to play a simple birthday melody using Web Audio API
+function playBirthdayMelody() {
+    console.log('🎵 Starting birthday melody...');
+    
+    try {
+        // Create audio context
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        console.log('Audio context created, state:', audioContext.state);
+        
+        // Function to actually play the melody
+        function startMelody() {
+            console.log('🎶 Playing Happy Birthday melody...');
+            
+            // Simple Happy Birthday melody
+            const melody = [
+                {note: 261.63, duration: 0.5}, // C - "Happy"
+                {note: 261.63, duration: 0.5}, // C - "Birth"
+                {note: 293.66, duration: 1.0}, // D - "day"
+                {note: 261.63, duration: 1.0}, // C - "to"
+                {note: 349.23, duration: 1.0}, // F - "you"
+                {note: 329.63, duration: 2.0}, // E - (hold)
+                
+                {note: 261.63, duration: 0.5}, // C - "Happy"
+                {note: 261.63, duration: 0.5}, // C - "Birth"
+                {note: 293.66, duration: 1.0}, // D - "day"
+                {note: 261.63, duration: 1.0}, // C - "to"
+                {note: 392.00, duration: 1.0}, // G - "you"
+                {note: 349.23, duration: 2.0}  // F - (hold)
+            ];
+            
+            let currentTime = audioContext.currentTime + 0.1;
+            let totalDuration = 0;
+            
+            melody.forEach((note) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(note.note, currentTime);
+                oscillator.type = 'sine';
+                
+                // Smooth envelope
+                gainNode.gain.setValueAtTime(0, currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.2, currentTime + 0.05);
+                gainNode.gain.linearRampToValueAtTime(0.1, currentTime + note.duration - 0.05);
+                gainNode.gain.linearRampToValueAtTime(0, currentTime + note.duration);
+                
+                oscillator.start(currentTime);
+                oscillator.stop(currentTime + note.duration);
+                
+                currentTime += note.duration + 0.1; // Small gap between notes
+                totalDuration = currentTime - audioContext.currentTime; // Track total duration
+            });
+            
+            // Show visual feedback
+            showMusicFeedback();
+            
+            // Auto-advance to next button when melody ends
+            setTimeout(function() {
+                console.log('Generated melody ended, removing everything and showing cake.gif');
+                
+                // Remove/hide all decorative elements
+                $('.bulb').removeClass('glow').fadeOut('slow');
+                $('#banner').fadeOut('slow');
+                
+                // Show cake.gif after clearing
+                setTimeout(function() {
+                    $('#cake_gif').fadeIn('slow');
+                    
+                    // After 5 seconds, show cake buttons directly
+                    setTimeout(function() {
+                        $('#cake_gif').fadeOut('slow', function() {
+                            $('.container').show();
+                            
+                            // Show cake buttons after cake animation
+                            setTimeout(function() {
+                                $('.cake-buttons-container').addClass('show').hide().fadeIn('slow');
+                            }, 500);
+                        });
+                    }, 5000); // Show cake.gif for 5 seconds
+                }, 1000);
+            }, totalDuration * 1000 + 1000); // Convert to milliseconds and add 1 second buffer
+        }
+        
+        // Resume audio context if needed
+        if (audioContext.state === 'suspended') {
+            console.log('Resuming audio context...');
+            audioContext.resume().then(() => {
+                console.log('Audio context resumed successfully');
+                startMelody();
+            }).catch((error) => {
+                console.log('Failed to resume audio context:', error);
+                showAudioFallback();
+            });
+        } else {
+            startMelody();
+        }
+        
+    } catch (error) {
+        console.log('Audio creation failed:', error);
+        showAudioFallback();
+    }
+}
+
+// Show visual feedback for music
+function showMusicFeedback() {
+    console.log('Showing music feedback...');
+    
+    // Create a music indicator
+    const musicIndicator = $(`
+        <div id="music-indicator" style="
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #ff69b4, #ff1493); 
+            color: white; 
+            padding: 20px 30px; 
+            border-radius: 15px; 
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+            animation: musicPulse 0.5s ease-in-out infinite alternate;
+        ">
+            🎵 Happy Birthday Song Playing! 🎵<br>
+            <small style="font-size: 14px;">🎂 For Shreya 🎂</small>
+        </div>
+    `);
+    
+    // Add CSS animation
+    if (!$('#musicPulseStyle').length) {
+        $('head').append(`
+            <style id="musicPulseStyle">
+                @keyframes musicPulse {
+                    0% { transform: translate(-50%, -50%) scale(1); }
+                    100% { transform: translate(-50%, -50%) scale(1.05); }
+                }
+            </style>
+        `);
+    }
+    
+    $('body').append(musicIndicator);
+    
+    // Remove after 8 seconds
+    setTimeout(() => {
+        $('#music-indicator').fadeOut(1000, function() {
+            $(this).remove();
+        });
+    }, 8000);
+}
+
+// Fallback when audio doesn't work
+function showAudioFallback() {
+    console.log('🔇 Audio not available, showing fallback');
+    
+    // Show a nice visual celebration instead
+    const celebration = $(`
+        <div id="audio-fallback" style="
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #9400d3); 
+            color: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.6);
+            animation: celebrationBounce 1s ease-in-out infinite alternate;
+            max-width: 400px;
+        ">
+            🎵 Happy Birthday Shreya! 🎵<br><br>
+            🎂 The music couldn't play, but<br>
+            the celebration continues! 🎉<br><br>
+            <small style="font-size: 14px;">
+                💡 Tip: Add MP3 files to the 'audio' folder<br>
+                for background music next time!
+            </small>
+        </div>
+    `);
+    
+    // Add CSS animation if not already added
+    if (!$('#celebrationStyle').length) {
+        $('head').append(`
+            <style id="celebrationStyle">
+                @keyframes celebrationBounce {
+                    0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+                    100% { transform: translate(-50%, -50%) scale(1.05) rotate(1deg); }
+                }
+            </style>
+        `);
+    }
+    
+    $('body').append(celebration);
+    
+    // Remove after 6 seconds
+    setTimeout(() => {
+        $('#audio-fallback').fadeOut(1000, function() {
+            $(this).remove();
+        });
+    }, 6000);
+}
+
 // Create fireworks every 3 seconds during party mode
 setInterval(function() {
     if ($('body').hasClass('party-mode')) {
         createFireworks();
     }
 }, 3000);
+
+// Cake Buttons Functionality
+$(document).ready(function() {
+    // Debug: Test audio element on page load
+    setTimeout(function() {
+        const audio = document.getElementById('personalised_music');
+        if (audio) {
+            console.log('Audio element found on page load');
+            console.log('Audio src:', audio.currentSrc || audio.src);
+            console.log('Audio readyState:', audio.readyState);
+            console.log('Audio networkState:', audio.networkState);
+        } else {
+            console.error('Audio element not found on page load!');
+        }
+    }, 2000);
+    
+    // Personalised Music Button
+    $('#personalised_music_btn').click(function() {
+        console.log('Personalised music button clicked!');
+        
+        const audio = document.getElementById('personalised_music');
+        const button = $(this);
+        
+        if (!audio) {
+            console.error('Audio element not found!');
+            alert('Audio element not found!');
+            return;
+        }
+        
+        console.log('Audio element found:', audio);
+        console.log('Audio source:', audio.currentSrc || 'No source loaded');
+        
+        if (audio.paused) {
+            // Set volume to audible level
+            audio.volume = 0.7;
+            console.log('Attempting to play audio...');
+            
+            // Add event listeners for debugging
+            audio.addEventListener('loadstart', function() {
+                console.log('Audio loading started');
+            });
+            
+            audio.addEventListener('canplay', function() {
+                console.log('Audio can play');
+            });
+            
+            audio.addEventListener('playing', function() {
+                console.log('Audio is now playing');
+                button.text('🎵 Stop Music').removeClass('btn-success').addClass('btn-danger');
+                $('.cake-button-item').first().addClass('animated pulse');
+            });
+            
+            audio.addEventListener('error', function(e) {
+                console.error('Audio error:', e);
+                console.error('Error code:', audio.error ? audio.error.code : 'Unknown');
+                alert('Audio error occurred. Check console for details.');
+            });
+            
+            audio.addEventListener('ended', function() {
+                console.log('Audio playback ended');
+                button.text('Personalised Music').removeClass('btn-danger').addClass('btn-success');
+                $('.cake-button-item').first().removeClass('animated pulse');
+            });
+            
+            // Try to play
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('SUCCESS: Audio playback started!');
+                }).catch((error) => {
+                    console.error('Play promise rejected:', error);
+                    
+                    if (error.name === 'NotAllowedError') {
+                        alert('Browser blocked autoplay. Please interact with the page first and try again.');
+                    } else if (error.name === 'NotSupportedError') {
+                        alert('Audio format not supported by your browser.');
+                    } else {
+                        alert('Could not play audio: ' + error.message);
+                    }
+                });
+            } else {
+                console.log('Play method does not return a promise');
+            }
+        } else {
+            console.log('Stopping audio playback');
+            audio.pause();
+            audio.currentTime = 0;
+            button.text('Personalised Music').removeClass('btn-danger').addClass('btn-success');
+            $('.cake-button-item').first().removeClass('animated pulse');
+        }
+    });
+    
+    // Temporary buttons functionality
+    $('#temp_btn_1').click(function() {
+        alert('Temp Button 1 clicked! This is a placeholder.');
+        $(this).closest('.cake-button-item').addClass('animated bounce');
+        setTimeout(() => {
+            $(this).closest('.cake-button-item').removeClass('animated bounce');
+        }, 1000);
+    });
+    
+    $('#temp_btn_2').click(function() {
+        alert('Temp Button 2 clicked! This is a placeholder.');
+        $(this).closest('.cake-button-item').addClass('animated shake');
+        setTimeout(() => {
+            $(this).closest('.cake-button-item').removeClass('animated shake');
+        }, 1000);
+    });
+    
+    $('#temp_btn_3').click(function() {
+        alert('Temp Button 3 clicked! This is a placeholder.');
+        $(this).closest('.cake-button-item').addClass('animated tada');
+        setTimeout(() => {
+            $(this).closest('.cake-button-item').removeClass('animated tada');
+        }, 1000);
+    });
+    
+    $('#temp_btn_4').click(function() {
+        alert('Temp Button 4 clicked! This is a placeholder.');
+        $(this).closest('.cake-button-item').addClass('animated wobble');
+        setTimeout(() => {
+            $(this).closest('.cake-button-item').removeClass('animated wobble');
+        }, 1000);
+    });
+});

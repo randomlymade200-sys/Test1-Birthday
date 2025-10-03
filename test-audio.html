@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Audio Test</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+        .status { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Audio Test for music1.mp3</h1>
+    
+    <button id="test_music_btn">Test Music1.mp3</button>
+    <button id="stop_music_btn">Stop Music</button>
+    <button id="test_disco_btn">Test Disco.mp3 (Known Working)</button>
+    <button id="check_support_btn">Check Audio Support</button>
+    
+    <br><br>
+    
+    <div id="status" class="status info">Ready to test...</div>
+    <div id="debug_info" class="status">Debug info will appear here...</div>
+    
+    <!-- Audio elements -->
+    <audio id="test_audio" controls style="display: block; margin: 20px 0;">
+        <source src="audio/music1.mp3" type="audio/mpeg">
+        <source src="audio/music1.mp3" type="audio/mp3">
+        Your browser doesn't support audio.
+    </audio>
+    
+    <audio id="disco_audio" controls style="display: block; margin: 20px 0;">
+        <source src="audio/disco.mp3" type="audio/mpeg">
+        Your browser doesn't support audio.
+    </audio>
+    
+    <script>
+        $(document).ready(function() {
+            
+            // Check audio support
+            $('#check_support_btn').click(function() {
+                const audio = document.createElement('audio');
+                const canPlayMP3 = audio.canPlayType('audio/mpeg');
+                const canPlayOGG = audio.canPlayType('audio/ogg');
+                const canPlayWAV = audio.canPlayType('audio/wav');
+                
+                $('#debug_info').html(`
+                    <strong>Browser Audio Support:</strong><br>
+                    MP3: ${canPlayMP3 || 'Not supported'}<br>
+                    OGG: ${canPlayOGG || 'Not supported'}<br>
+                    WAV: ${canPlayWAV || 'Not supported'}<br>
+                    Audio Context: ${window.AudioContext || window.webkitAudioContext ? 'Supported' : 'Not supported'}
+                `).removeClass().addClass('status info');
+            });
+            
+            // Test music1.mp3
+            $('#test_music_btn').click(function() {
+                console.log('Testing music1.mp3...');
+                $('#status').text('Attempting to play music1.mp3...').removeClass().addClass('status info');
+                
+                const audio = document.getElementById('test_audio');
+                audio.volume = 0.5; // Set volume to 50%
+                
+                // Add event listeners
+                audio.addEventListener('loadstart', () => {
+                    console.log('Started loading audio');
+                    $('#debug_info').text('Loading started...').removeClass().addClass('status info');
+                });
+                
+                audio.addEventListener('canplay', () => {
+                    console.log('Audio can start playing');
+                    $('#debug_info').text('Audio loaded and ready to play').removeClass().addClass('status success');
+                });
+                
+                audio.addEventListener('error', (e) => {
+                    console.error('Audio error:', e);
+                    $('#status').text('ERROR: Audio failed to load - ' + (e.message || 'Unknown error')).removeClass().addClass('status error');
+                });
+                
+                audio.addEventListener('ended', () => {
+                    console.log('Audio playback ended');
+                    $('#status').text('Audio playback completed').removeClass().addClass('status success');
+                });
+                
+                // Try to play
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('SUCCESS: music1.mp3 is playing!');
+                        $('#status').text('SUCCESS: music1.mp3 is playing! Volume: ' + Math.round(audio.volume * 100) + '%').removeClass().addClass('status success');
+                    }).catch((error) => {
+                        console.error('ERROR playing audio:', error);
+                        $('#status').text('ERROR: Could not play music1.mp3 - ' + error.message).removeClass().addClass('status error');
+                        
+                        // Try with user interaction
+                        if (error.name === 'NotAllowedError') {
+                            $('#debug_info').html('<strong>Browser blocked autoplay!</strong><br>Click the audio controls below to play manually.').removeClass().addClass('status error');
+                        }
+                    });
+                }
+            });
+            
+            // Test disco.mp3 (known working file)
+            $('#test_disco_btn').click(function() {
+                const audio = document.getElementById('disco_audio');
+                audio.volume = 0.3;
+                
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        $('#debug_info').text('Disco.mp3 is playing! (This confirms audio works)').removeClass().addClass('status success');
+                    }).catch((error) => {
+                        $('#debug_info').text('Even disco.mp3 failed: ' + error.message).removeClass().addClass('status error');
+                    });
+                }
+            });
+            
+            // Stop music
+            $('#stop_music_btn').click(function() {
+                const audio1 = document.getElementById('test_audio');
+                const audio2 = document.getElementById('disco_audio');
+                
+                audio1.pause();
+                audio1.currentTime = 0;
+                audio2.pause();
+                audio2.currentTime = 0;
+                
+                $('#status').text('All music stopped.').removeClass().addClass('status info');
+            });
+            
+            // Auto-check support on load
+            $('#check_support_btn').click();
+        });
+    </script>
+</body>
+</html>

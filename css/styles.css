@@ -26,7 +26,7 @@ body {
 }
 
 .loading::before {
-    content: "🎉 Loading Party... 🎉";
+    content: "Loading Party...";
     color: white;
     font-size: 2em;
     font-weight: bold;
@@ -44,6 +44,48 @@ body {
     50% { transform: scale(1.1); }
 }
 
+@keyframes sparkle {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+    25% { 
+        transform: scale(1.05) rotate(1deg);
+        filter: brightness(1.3);
+    }
+    75% { 
+        transform: scale(1.05) rotate(-1deg);
+        filter: brightness(1.3);
+    }
+}
+
+/* Shhhh Message Styles */
+.shhhh-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    text-align: center;
+    display: none;
+}
+
+.shhhh-message h1 {
+    color: #ffffff;
+    font-family: 'Lobster', cursive;
+    font-size: 4vw;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin: 0;
+    opacity: 0.9;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); }
+}
+
 /* Container Styles */
 .container {
     display: none;
@@ -55,7 +97,8 @@ body {
 }
 
 .peach-after {
-    animation: peach_alive linear 8s infinite;
+    background-color: #000000 !important;
+    animation: none !important;
 }
 
 @keyframes peach_alive {
@@ -224,24 +267,23 @@ body {
 /* Cake Styles */
 .cake_class {
     position: fixed;
-    left: 45%;
-    top: 60%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     opacity: 1.0;
-    z-index: 9999;
-    width: 12%;
-    height: 20%;
+    z-index: 100;
+    width: 300px;
+    height: auto;
     display: none;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
 }
 
 .cake-cover {
     position: fixed;
-    left: 47%;
-    top: 34%;
-    opacity: 1.0;
-    z-index: 9999;
-    width: 130px;
-    height: 200px;
-    display: none;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
 }
 
 /* Animated Cake */
@@ -279,6 +321,18 @@ body {
     animation: flame 1s infinite alternate;
 }
 
+/* Flame Glow Effect */
+.fuego.flame-glow {
+    display: block;
+    box-shadow: 0 0 60px 20px rgba(255, 215, 0, 0.8);
+    animation: flame 0.8s infinite alternate, glow 2s ease-in-out infinite;
+}
+
+/* Flame Blowing Out Animation */
+.fuego.flame-out {
+    animation: blowOut 0.8s ease-out forwards;
+}
+
 @keyframes flame {
     0% {
         transform: translateY(0) scale(1);
@@ -287,6 +341,30 @@ body {
     100% {
         transform: translateY(-5px) scale(1.1);
         background: radial-gradient(circle, #ff4500, #ffd700);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 60px 20px rgba(255, 215, 0, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 80px 30px rgba(255, 140, 0, 0.9);
+    }
+}
+
+@keyframes blowOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-20px) translateY(-10px) scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-40px) translateY(-20px) scale(0.1);
     }
 }
 
@@ -326,43 +404,210 @@ body {
     display: block;
 }
 
-/* Button Styles */
+/* Button Styles - YouTube Aesthetic */
 .btn-primary {
-    border-color: #466baf;
-    padding: 10px;
-    text-transform: uppercase;
-    font-family: 'Signika', sans-serif;
-    font-weight: 700;
-    color: #fff;
-    background-color: #466baf;
-    margin: 5px;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    display: none;
-}
-
-/* Welcome Button Specific Styling */
-#welcome_btn {
-    background-color: #b0b0fd;
-    border-color: #b0b0fd;
-    font-family: 'Anime Ace BB', monospace;
+    border: none;
+    padding: 12px 20px;
     text-transform: none;
-    color: #333;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #0f0f0f;
+    background-color: #f1f1f1;
+    margin: 6px 4px;
+    border-radius: 20px;
+    transition: all 0.1s ease;
+    display: none;
+    min-width: 160px;
+    height: 42px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: none;
+    letter-spacing: 0.25px;
 }
 
+/* Custom Button Class for YouTube Style */
+.custom-btn {
+    background-color: #f1f1f1 !important;
+    color: #0f0f0f !important;
+    border-radius: 20px !important;
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    min-width: 160px !important;
+    height: 42px !important;
+    border: none !important;
+    box-shadow: none !important;
+    transition: all 0.1s ease !important;
+    letter-spacing: 0.25px !important;
+}
+
+/* Welcome Button Specific Styling - Matches Background */
+#welcome_btn {
+    background-color: #f1f1f1 !important;
+    color: #0f0f0f !important;
+    font-family: 'Roboto', 'Segoe UI', sans-serif !important;
+    text-transform: none !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    min-width: 220px !important;
+    font-size: 16px !important;
+}
+
+/* Ensure welcome button shows as inline-block when visible */
+#welcome_btn.show,
+#welcome_btn:not([style*="display: none"]) {
+    display: inline-block !important;
+}
+
+#welcome_btn:hover {
+    background-color: #e5e5e5 !important;
+    color: #0f0f0f !important;
+}
+
+/* YouTube Style Hover Effects */
 .btn-primary:hover,
 .btn-primary:focus,
-.btn-primary:active {
-    border-color: #fff;
-    color: #fff;
-    background-color: #5a7bc4;
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+.btn-primary:active,
+.custom-btn:hover,
+.custom-btn:focus,
+.custom-btn:active {
+    background-color: #e5e5e5 !important;
+    color: #0f0f0f !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border-radius: 20px !important;
+    border: none !important;
 }
 
-/* Show button */
-#welcome_btn {
-    display: inline-block;
+/* Show lights button initially hidden */
+
+/* Yes Button Styling - Matches Background */
+#yes_btn {
+    background-color: #f1f1f1 !important;
+    color: #0f0f0f !important;
+    font-weight: 600 !important;
+    min-width: 180px !important;
+    height: 48px !important;
+    font-size: 16px !important;
+}
+
+#yes_btn:hover {
+    background-color: #e5e5e5 !important;
+    color: #0f0f0f !important;
+}
+
+/* No Button Styling - Matches Background */
+#no_btn {
+    background-color: #f1f1f1 !important;
+    color: #0f0f0f !important;
+    font-weight: 600 !important;
+    min-width: 140px !important;
+    height: 48px !important;
+    font-size: 16px !important;
+}
+
+#no_btn:hover {
+    background-color: #e5e5e5 !important;
+    color: #0f0f0f !important;
+}
+
+/* Cake Button Styling */
+#cake_btn {
+    background-color: #ff69b4 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    min-width: 180px !important;
+    height: 44px !important;
+}
+
+#cake_btn:hover {
+    background-color: #ff1493 !important;
+    color: #ffffff !important;
+}
+
+/* Blow Candles Button Styling */
+#blow_candles_btn {
+    background-color: #4CAF50 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    min-width: 180px !important;
+    height: 44px !important;
+    animation: pulse-button 1.5s ease-in-out infinite;
+}
+
+#blow_candles_btn:hover {
+    background-color: #45a049 !important;
+    color: #ffffff !important;
+    animation: none;
+}
+
+@keyframes pulse-button {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 5px rgba(76, 175, 80, 0.4);
+    }
+}
+
+/* Test Audio Button Special Styling - YouTube Red Style */
+#test_audio_btn {
+    background-color: #ff0000 !important;
+    color: #ffffff !important;
+    border-radius: 20px !important;
+    border: none !important;
+    min-width: 140px !important;
+    height: 42px !important;
+}
+
+#test_audio_btn:hover,
+#test_audio_btn:focus,
+#test_audio_btn:active {
+    background-color: #cc0000 !important;
+    color: #ffffff !important;
+    border-radius: 20px !important;
+    border: none !important;
+}
+
+/* Dark Background Button Adaptation */
+body[style*="background-color: rgb(0, 0, 0)"] .btn-primary,
+body[style*="background-color: #000000"] .btn-primary,
+body[style*="background-color:#000000"] .btn-primary {
+    background-color: #272727 !important;
+    color: #ffffff !important;
+}
+
+body[style*="background-color: rgb(0, 0, 0)"] .custom-btn:hover,
+body[style*="background-color: #000000"] .custom-btn:hover,
+body[style*="background-color:#000000"] .custom-btn:hover {
+    background-color: #3f3f3f !important;
+    color: #ffffff !important;
+}
+
+/* Black Background Class for Better Control */
+.dark-theme .btn-primary,
+.dark-theme .custom-btn {
+    background-color: #272727 !important;
+    color: #ffffff !important;
+}
+
+.dark-theme .custom-btn:hover,
+.dark-theme .btn-primary:hover {
+    background-color: #3f3f3f !important;
+    color: #ffffff !important;
+}
+
+.dark-theme #welcome_btn {
+    background-color: #065fd4 !important;
+    color: #ffffff !important;
+}
+
+.dark-theme #welcome_btn:hover {
+    background-color: #4285f4 !important;
 }
 
 /* Card Styles */
@@ -392,11 +637,128 @@ body {
     display: none;
 }
 
+/* Button Control Panel - Move higher */
+.navbar-fixed-bottom {
+    bottom: 60px; /* Move 60px higher from the bottom */
+}
+
 /* Hidden Elements */
-#lights_btn, #music_btn, #decorate_btn, #balloons_btn, 
-#cake_btn, #party_btn, #message_btn, #banner, 
-#cake_main, #candle, #card {
+#welcome_btn, #lights_btn, #confirm_lights_btn, #test_audio_btn,
+#party_btn, #message_btn, #banner, 
+#cake_main, #candle, #card, #turnoff_light, #cake_gif,
+#welcome_dance, #second_page, #happy_birthday_page {
     display: none;
+}
+
+/* Initial Page Styles */
+.initial-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fcfcfc;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.initial-image {
+    max-width: 80%;
+    max-height: 60%;
+    object-fit: contain;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.question-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-buttons .btn {
+    display: inline-block !important;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Second Page Styles */
+.second-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fcfcfc;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.second-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+/* Happy Birthday Page Styles */
+.happy-birthday-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fcfcfc;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.happy-birthday-text {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    font-size: 8vw;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    animation: fadeInScale 1s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.5s;
 }
 
 /* Responsive Design */
@@ -434,3 +796,78 @@ body {
     75% { background-color: #ffd93d; }
     100% { background-color: #ff6b9d; }
 }
+
+/* Cake Buttons Section */
+.cake-buttons-container {
+    display: none; /* Initially hidden */
+    flex-direction: row; /* Horizontal layout */
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Increased gap for better spacing */
+    margin: 20px 0;
+    flex-wrap: nowrap; /* Keep all buttons on one line */
+    background-image: url('../images/cake.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 300px 300px; /* Large background cake */
+    background-attachment: fixed;
+    padding: 40px 20px; /* Add padding around buttons */
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.cake-buttons-container.show {
+    display: flex; /* Show when this class is added */
+}
+
+.cake-button-item {
+    display: flex;
+    flex-direction: row; /* Horizontal layout for each item */
+    align-items: center;
+    animation: float 3s ease-in-out infinite;
+    min-width: 200px; /* Increased width for bigger buttons */
+    gap: 10px; /* Space between image and button */
+}
+
+.cake-button-img {
+    width: 60px; /* Larger size for bigger buttons */
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.cake-button-img:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.cake-btn {
+    padding: 15px 25px; /* Much larger padding */
+    font-size: 16px; /* Larger font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 30px; /* Larger border radius */
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    white-space: nowrap; /* Prevent text wrapping */
+    min-width: 150px; /* Ensure consistent button width */
+    background: rgba(255,255,255,0.9); /* Semi-transparent background */
+}
+
+.cake-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Animation delays for staggered effect */
+.cake-button-item:nth-child(1) { animation-delay: 0s; }
+.cake-button-item:nth-child(2) { animation-delay: 0.5s; }
+.cake-button-item:nth-child(3) { animation-delay: 1s; }
+.cake-button-item:nth-child(4) { animation-delay: 1.5s; }
+.cake-button-item:nth-child(5) { animation-delay: 2s; }

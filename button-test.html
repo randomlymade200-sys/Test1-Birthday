@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Button Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Button Sequence Test</h1>
+    
+    <button id="test1" style="padding: 20px; margin: 10px; font-size: 18px;">Click Me First</button>
+    <button id="test2" style="padding: 20px; margin: 10px; font-size: 18px; display: none;">Then Me</button>
+    <button id="test3" style="padding: 20px; margin: 10px; font-size: 18px; display: none;">Finally Me</button>
+    
+    <div id="output" style="margin-top: 20px; padding: 20px; background: #f0f0f0;"></div>
+    
+    <script>
+        $(document).ready(function() {
+            console.log('jQuery loaded successfully');
+            $('#output').append('<p>✅ jQuery is working!</p>');
+            
+            $('#test1').click(function() {
+                console.log('Test1 clicked');
+                $('#output').append('<p>🔵 Button 1 clicked!</p>');
+                $(this).fadeOut('slow');
+                
+                setTimeout(function() {
+                    console.log('Showing test2');
+                    $('#test2').fadeIn('slow');
+                }, 1000);
+            });
+            
+            $('#test2').click(function() {
+                console.log('Test2 clicked');
+                $('#output').append('<p>🟢 Button 2 clicked!</p>');
+                $(this).fadeOut('slow');
+                
+                setTimeout(function() {
+                    console.log('Showing test3');
+                    $('#test3').fadeIn('slow');
+                }, 1000);
+            });
+            
+            $('#test3').click(function() {
+                console.log('Test3 clicked');
+                $('#output').append('<p>🔴 Button 3 clicked! Sequence complete!</p>');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -16,43 +16,40 @@
 <body>
     <div class="loading"></div>
     
+    <!-- Initial Question Page -->
+    <div id="initial_page" class="initial-screen">
+        <img src="images/first.jpg" id="first_image" alt="initial" class="initial-image"/>
+        <div class="question-buttons">
+            <button class="btn btn-primary custom-btn" id="yes_btn">Do you want to see?</button>
+            <button class="btn btn-primary custom-btn" id="no_btn">No</button>
+        </div>
+    </div>
+
+    <!-- Second GIF Page -->
+    <div id="second_page" class="second-screen">
+        <img src="images/second.gif" id="second_image" alt="surprise" class="second-image"/>
+    </div>
+
+    <!-- Happy Birthday Page (for No button) -->
+    <div id="happy_birthday_page" class="happy-birthday-screen">
+        <h1 class="happy-birthday-text">Happy Birthday Shreya</h1>
+    </div>
+    
     <!-- Audio Elements -->
-    <audio class="song" controls loop>
+    <audio class="song">
+        <source src="audio/disco.mp3" type="audio/mpeg">
         <source src="audio/birthday-song.mp3" type="audio/mpeg">
         Your browser doesn't support audio.
     </audio>
     
-    <!-- Balloons with Letters -->
-    <div class="balloons col-xs-2 text-center" id="b1">
-        <h3 style="color:#F2B300;">H</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b2">
-        <h3 style="color:#0719D4;">A</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b3">
-        <h3 style="color:#D14D39;">P</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b4">
-        <h3 style="color:#8FAD00;">P</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b5">
-        <h3 style="color:#8377E4;">Y</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b6">
-        <h3 style="color:#99C96A;">B</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b7">
-        <h3 style="color:#20CFB4;">D</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b8">
-        <h3 style="color:#FF6B9D;">A</h3>
-    </div>
-    <div class="balloons col-xs-2 text-center" id="b9">
-        <h3 style="color:#FFB347;">Y</h3>
-    </div>
-
     <!-- Welcome Dancing GIF -->
     <img src="images/startgif.gif" id="welcome_dance" alt="dancing" class="center1"/>
+
+    <!-- Turn Off Light GIF -->
+    <img src="images/turnofflight.gif" id="turnoff_light" alt="turning off lights" class="center1"/>
+
+    <!-- Cake GIF -->
+    <img src="images/cake.gif" id="cake_gif" alt="cake animation" class="center1"/>
 
     <!-- Birthday Cake -->
     <img src="images/cake.png" width="100%" class="cake_class" id="cake_main">
@@ -109,50 +106,55 @@
         <div class="navbar navbar-fixed-bottom">
             <div class="row">
                 <div class="col-md-6 text-center col-md-offset-3">
-                    <button class="btn btn-primary" id="welcome_btn">Wooolcome to the birthadyy party of Mr. Shreyuu</button>
-                    <button class="btn btn-primary" id="lights_btn">💡 Turn off Lights</button>
-                    <button class="btn btn-primary" id="music_btn">🎵 Play Music</button>
-                    <button class="btn btn-primary" id="decorate_btn">🎊 Let's Decorate</button>
-                    <button class="btn btn-primary" id="balloons_btn">🎈 Fly With Balloons</button>
-                    <button class="btn btn-primary" id="cake_btn">🎂 Bring the Cake</button>
-                    <button class="btn btn-primary" id="party_btn">🕺 Party Time!</button>
-                    <button class="btn btn-primary" id="message_btn">💌 Special Message</button>
+                    <button class="btn btn-primary custom-btn" id="welcome_btn">Welcome to Shreya's Birthday Party</button>
+                    <button class="btn btn-primary custom-btn" id="lights_btn">light band kardu kya mee</button>
+                    <button class="btn btn-primary custom-btn" id="confirm_lights_btn">sachiii?</button>
+                    <button class="btn btn-primary custom-btn" id="test_audio_btn" style="background-color: #ff4444;">Test Audio</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New Cake Buttons Section -->
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-12 text-center">
+                <div class="cake-buttons-container">
+                    <!-- Personalised Music Button (First) -->
+                    <div class="cake-button-item">
+                        <img src="images/cake.gif" alt="cake" class="cake-button-img"/>
+                        <button class="btn btn-success cake-btn" id="personalised_music_btn">Personalised Music</button>
+                    </div>
+                    
+                    <!-- Spacer for visual separation -->
+                    <div style="width: 50px;"></div>
+                    
+                    <!-- Other Buttons -->
+                    <div class="cake-button-item">
+                        <img src="images/cake.gif" alt="cake" class="cake-button-img"/>
+                        <button class="btn btn-info cake-btn" id="temp_btn_1">Temp Button 1</button>
+                    </div>
+                    <div class="cake-button-item">
+                        <img src="images/cake.gif" alt="cake" class="cake-button-img"/>
+                        <button class="btn btn-warning cake-btn" id="temp_btn_2">Temp Button 2</button>
+                    </div>
+                    <div class="cake-button-item">
+                        <img src="images/cake.gif" alt="cake" class="cake-button-img"/>
+                        <button class="btn btn-danger cake-btn" id="temp_btn_3">Temp Button 3</button>
+                    </div>
+                    <div class="cake-button-item">
+                        <img src="images/cake.gif" alt="cake" class="cake-button-img"/>
+                        <button class="btn btn-primary cake-btn" id="temp_btn_4">Temp Button 4</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Birthday Card -->
-    <div id="card">
-        <div id="card-inside">
-            <div class="wrap">
-                <center>
-                    <p style="font-size:3vw;" class="animated infinite wobble">
-                        <b><u>🎉 Happy Birthday! 🎉</u></b>
-                    </p>
-                </center>
-                <p style="font-size:1.5vw;">
-                    🎈 Welcome to your special day! Today is all about celebrating YOU! 
-                    Let's make this the most amazing birthday celebration ever! 🎂
-                </p>
-                <p style="font-size:1.5vw;">
-                    Get ready for an interactive birthday party experience filled with 
-                    lights, music, balloons, cake, and lots of fun! 
-                    Click the buttons below to start the celebration! 🎊
-                </p>
-                <p style="font-size:2vw;" class="signed">
-                    <u>Made with ❤️</u>
-                </p>
-            </div>
-        </div>
-        <div id="card-front">
-            <div class="wrap">
-                <h1 style="font-size:4vw;" class="animated infinite swing">
-                    🎂 Birthday Celebration! 🎂
-                </h1>
-            </div>
-        </div>
-    </div>
+    
+    <!-- Audio for Personalised Music -->
+    <audio id="personalised_music" preload="auto" style="display: none;">
+        <source src="audio/music1.mp3" type="audio/mpeg">
+        <source src="audio/music1.mp3" type="audio/mp3">
+        Your browser doesn't support audio.
+    </audio>
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
